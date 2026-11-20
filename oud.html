@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f2e9">
+  <meta name="description" content="Découvrez les bougies parfumées Villa Nova by Galleria et les cadres photo Galleria.">
+  <title>Oud — Grand format · Galleria</title>
+  <link rel="icon" href="assets/galleria-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script src="catalog.js" defer></script>
+  <script src="translations.js" defer></script>
+  <script src="shop.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main" data-copy="skip">Aller au contenu</a>
+  <header class="masthead">
+    <div class="head wrap">
+      <a class="brand" href="index.html" aria-label="Galleria, accueil" data-aria="home"><img src="assets/galleria-logo.svg" alt="Galleria" width="242" height="48"></a>
+      <nav aria-label="Collections" data-aria="collections">
+        <a href="bougies.html" data-copy="candles">Bougies</a>
+        <a href="cadres.html" data-copy="frames">Cadres photo</a>
+      </nav>
+      <div class="locales" role="group" aria-label="Langue" data-aria="language">
+        <button type="button" data-language="fr" lang="fr" aria-label="Français" aria-pressed="true">FR</button>
+        <button type="button" data-language="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+        <button type="button" data-language="ar" lang="ar" aria-label="العربية" aria-pressed="false">عربي</button>
+      </div>
+      <button class="basket" type="button" id="open-cart">
+        <svg width="20" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 7h14l2 14H3L5 7Z"/><path d="M9 9V5a3 3 0 0 1 6 0v4"/></svg>
+        <span class="basket-name" data-copy="cart">Panier</span><span id="cart-count" class="count">0</span>
+      </button>
+    </div>
+  </header>
+  <main id="main" data-page-title="oudName">
+    <section class="collection wrap page-collection detail">
+      <a class="quiet breadcrumb" href="bougies.html" data-copy="backToCandles">Toutes les bougies</a>
+      <div id="oud-detail" data-product-detail="oud"></div>
+    </section>
+    <div id="status" class="sr-only" role="status"></div>
+  </main>
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <a class="brand" href="index.html" aria-label="Galleria, accueil" data-aria="home"><img src="assets/galleria-logo.svg" alt="Galleria" width="242" height="48"></a>
+      <a class="instagram" href="https://www.instagram.com/galleria.ma/" aria-label="Galleria sur Instagram" data-aria="instagram"><bdi>@galleria.ma</bdi></a>
+      <nav aria-label="Collections en pied de page" data-aria="footerNav"><a href="bougies.html" data-copy="candles">Bougies</a><a href="cadres.html" data-copy="frames">Cadres photo</a></nav>
+    </div>
+  </footer>
+  <dialog id="cart" aria-labelledby="cart-title">
+    <div class="cart-panel">
+      <header class="cart-head"><h2 id="cart-title" data-copy="cartTitle">Votre panier</h2><button id="close-cart" class="icon-button" type="button" aria-label="Fermer le panier" data-aria="closeCart">×</button></header>
+      <p id="empty-cart" data-copy="emptyCart">Votre panier est vide.</p>
+      <ul id="cart-items" class="cart-items"></ul>
+      <form id="checkout" hidden>
+        <div class="total"><span data-copy="subtotal">Sous-total</span><strong id="total"></strong></div>
+        <label for="city" data-copy="city">Ville de livraison</label>
+        <input id="city" name="city" autocomplete="address-level2" placeholder="Ex. Tanger" data-placeholder="cityExample" maxlength="80" required>
+        <p class="cart-note" data-copy="checkoutNote">La disponibilité, les prix et la livraison sont confirmés sur WhatsApp.</p>
+        <p id="preview-note" class="cart-note" hidden data-copy="previewNote">Le numéro WhatsApp de la boutique reste à configurer. Vous pouvez prévisualiser la demande ici.</p>
+        <button id="send-order" class="button dark" type="submit">Commander sur WhatsApp</button>
+        <label for="message" class="sr-only" data-copy="orderPreview">Aperçu de la demande</label>
+        <textarea id="message" rows="6" readonly hidden></textarea>
+      </form>
+      <button id="continue-shopping" class="quiet" type="button" data-copy="continueShopping">Continuer mes achats</button>
+    </div>
+  </dialog>
+  <noscript><p class="wrap">Activez JavaScript pour parcourir les produits et utiliser le panier.</p></noscript>
+</body>
+</html>
