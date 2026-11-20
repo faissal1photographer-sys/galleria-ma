@@ -210,6 +210,13 @@ figcaption { position: absolute; right: .75rem; bottom: .75rem; background: var(
 @media (max-width: 540px) { .home-collections { grid-template-columns: 1fr; } }
 
 </style>
+<style>
+.frame-configurator{display:grid;gap:1rem;margin:1.6rem 0}
+.frame-field{display:grid;gap:.4rem;color:#35412d;font-weight:600}
+.frame-field select{width:100%;border:1px solid #b8b6a7;border-radius:3px;padding:.85rem 1rem;background:#f8f5ed;color:#283522;font:inherit}
+.frame-price-note{font-size:.9rem;color:#6c695b;margin:.25rem 0}
+.frame-configurator .button{justify-self:start;padding:1rem 1.35rem}
+</style>
 </head>
 <body>
   <a class="skip" href="#main" data-copy="skip">Aller au contenu</a>
@@ -345,7 +352,7 @@ window.GALERIA = {
     {
       id: "amber",
       collection: "bougies",
-      price: null,
+      price: 99,
       image: null,
       illustrative: false
     },
@@ -461,7 +468,20 @@ function t(key, values = {}) {
   );
 }
 
+const framePrints = ["Al Hoceima — coucher de soleil", "Al Hoceima — côte", "Al Hoceima — panorama", "Falaises au crépuscule", "Rochers & mer"];
+const frameFinishes = ["Noyer / Walnut / جوز", "Noir / Black / أسود", "Blanc / White / أبيض"];
+const frameSizes = ["50 × 70 cm", "Petit format / Small / صغير (dimensions à confirmer)"];
+function addFrameVariant(id) {
+  if (!id.startsWith("cadre:")) return;
+  const parts=id.split(":").slice(1).map(Number);
+  if(parts.length!==3 || parts.some((v,i)=>!Number.isInteger(v)||v<0||v>=[framePrints,frameFinishes,frameSizes][i].length)) return;
+  if(!catalog.has(id)) catalog.set(id,{id,collection:"cadres",price:null,illustrative:false,selection:parts});
+}
 function productName(product) {
+  if (product.selection) {
+    const [p,f,s]=product.selection;
+    return t("frameName")+" — "+framePrints[p]+" / "+frameFinishes[f]+" / "+frameSizes[s];
+  }
   return t(product.id === "cadre" ? "frameName" : product.id + "Name");
 }
 const dialog = document.querySelector("#cart");
@@ -480,9 +500,9 @@ try {
   const savedLanguage = localStorage.getItem(languageKey);
   if (languages.includes(savedLanguage)) language = savedLanguage;
   const saved = JSON.parse(localStorage.getItem(cartKey) || "{}");
-  for (const id of catalog.keys()) {
-    const quantity = saved?.[id];
-    if (Number.isInteger(quantity) && quantity > 0) {
+  for (const [id, quantity] of Object.entries(saved || {})) {
+    addFrameVariant(id);
+    if (catalog.has(id) && Number.isInteger(quantity) && quantity > 0) {
       cart[id] = Math.min(quantity, maxQuantity);
     }
   }
@@ -575,7 +595,31 @@ function renderProducts() {
     frameImage.src = frame.image;
     frameImage.alt = t("frameAlt");
     document.querySelector("#frame-caption").hidden = !frame.illustrative;
-    frameBuy.replaceChildren(element("span", "price", priceLabel(frame.price)), addControl(frame));
+    frameBuy.replaceChildren();
+    const labels = {
+      fr:["Photographie","Finition du cadre","Format","Ajouter le cadre au panier","Prix à confirmer sur WhatsApp"],
+      en:["Photograph","Frame finish","Size","Add customized frame to cart","Price confirmed on WhatsApp"],
+      ar:["الصورة","لون الإطار","المقاس","إضافة الإطار إلى السلة","يتم تأكيد السعر عبر واتساب"]
+    }[language];
+    const picker = element("div","frame-configurator");
+    const inputs = [];
+    [framePrints,frameFinishes,frameSizes].forEach((values,i)=>{
+      const label=element("label","frame-field",labels[i]);
+      const select=document.createElement("select");
+      select.setAttribute("aria-label",labels[i]);
+      values.forEach((value,n)=>{const option=document.createElement("option");option.value=String(n);option.textContent=value;select.append(option);});
+      inputs.push(select);label.append(select);picker.append(label);
+    });
+    const info=element("p","frame-price-note",labels[4]);
+    const button=element("button","button dark",labels[3]);button.type="button";
+    button.addEventListener("click",()=>{
+      const id="cadre:"+inputs.map(s=>s.value).join(":");
+      addFrameVariant(id);
+      updateQuantity(id,(cart[id]||0)+1);
+      openCart(button);
+    });
+    picker.append(info,button);
+    frameBuy.append(picker);
   }
 }
 
@@ -630,6 +674,7 @@ function renderCart() {
   const { lines, count, subtotal } = cartSummary();
   cartItems.replaceChildren();
   for (const { product, quantity } of lines) {
+    if (!product) continue;
     const row = element("li", "cart-item");
     const itemDescription = element("div");
     itemDescription.append(element("strong", "", productName(product)), element("div", "cart-note", priceLabel(product.price)));
