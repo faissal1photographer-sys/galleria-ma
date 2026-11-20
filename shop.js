@@ -169,14 +169,47 @@ function renderFrameOptions() {
     return card;
   }));
 
-  for (const [name, choices] of [["finish", finishes], ["size", sizes]]) {
-    const select = frameForm.elements.namedItem(name);
-    const empty = new Option(t("chooseOption"), "");
-    empty.disabled = true;
-    select.replaceChildren(empty, ...choices.map(choice => new Option(t(choice.label), choice.id)));
-    select.value = selection.get(name) || "";
+  const finishGallery = frameForm.querySelector("#finish-gallery");
+  const chosenFinish = selection.get("finish");
+  finishGallery.replaceChildren(...finishes.map(finish => {
+    const choice = element("label", "finish-option");
+    const radio = element("input");
+    radio.type = "radio";
+    radio.name = "finish";
+    radio.value = finish.id;
+    radio.required = true;
+    radio.checked = chosenFinish === finish.id;
+
+    const display = element("span", "finish-display");
+    const frame = element("span", "finish-frame");
+    frame.dataset.finish = finish.id;
+    const image = element("img");
+    image.alt = "";
+    image.loading = "lazy";
+    frame.append(image);
+    display.append(frame, element("span", "finish-name", t(finish.label)));
+    choice.append(radio, display);
+    return choice;
+  }));
+  updateFinishPreviews(selection.get("print"));
+
+  const size = frameForm.elements.namedItem("size");
+  const empty = new Option(t("chooseOption"), "");
+  empty.disabled = true;
+  size.replaceChildren(empty, ...sizes.map(choice => new Option(t(choice.label), choice.id)));
+  size.value = selection.get("size") || "";
+}
+
+function updateFinishPreviews(printId) {
+  const selectedPrint = prints.find(print => print.id === printId) || prints[0];
+  for (const image of frameForm.querySelectorAll("#finish-gallery img")) {
+    image.src = selectedPrint.image;
   }
 }
+
+frameForm?.addEventListener("change", event => {
+  if (event.target.name === "print") updateFinishPreviews(event.target.value);
+});
 
 frameForm?.addEventListener("submit", event => {
   event.preventDefault();

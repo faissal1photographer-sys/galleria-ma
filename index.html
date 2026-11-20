@@ -7,10 +7,10 @@
   <meta name="description" content="Découvrez les bougies parfumées Villa Nova by Galleria et les cadres photo Galleria.">
   <title>Galleria — Bougies & cadres photo</title>
   <link rel="icon" href="assets/galleria-mark.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
   <script src="catalog.js" defer></script>
-  <script src="translations.js" defer></script>
-  <script src="shop.js" defer></script>
+  <script src="translations.js?v=2" defer></script>
+  <script src="shop.js?v=2" defer></script>
 </head>
 <body>
   <a class="skip" href="#main" data-copy="skip">Aller au contenu</a>
@@ -43,9 +43,20 @@
           <a class="quiet" href="cadres.html" data-copy="browseFrames">Voir les cadres photo</a>
         </div>
       </div>
-      <figure class="hero-photo">
-        <img src="assets/frames-interior.webp" alt="Deux photos encadrées de la côte au crépuscule dans un intérieur" data-alt="heroAlt" fetchpriority="high" width="850" height="1700">
-      </figure>
+      <div class="hero-gallery">
+        <a class="hero-photo hero-frames" href="cadres.html">
+          <img src="assets/frames-interior.webp" alt="Deux photos encadrées de la côte au crépuscule dans un intérieur" data-alt="heroAlt" fetchpriority="high" width="850" height="1700">
+          <span data-copy="frames">Cadres photo</span>
+        </a>
+        <a class="hero-photo hero-amber" href="amber.html">
+          <img src="assets/amber.webp" alt="" width="1152" height="1536">
+          <span data-copy="amberName">Amber</span>
+        </a>
+        <a class="hero-photo hero-oud" href="oud.html">
+          <img src="assets/oud.webp" alt="" width="1153" height="1536">
+          <span data-copy="oudName">Oud — Grand format</span>
+        </a>
+      </div>
     </section>
     <div class="order-strip" aria-label="Modalités de commande" data-aria="orderTerms">
       <span data-copy="noAccount">Panier sans compte</span><span data-copy="whatsappOrder">Commande par WhatsApp</span><span data-copy="delivery">Livraison à confirmer selon la ville</span>

@@ -76,6 +76,7 @@ window.GALERIA_COPY = {
   configureFrame: ["Composez votre cadre", "Configure your frame", "صمّم إطارك"],
   choosePrint: ["Photographie", "Photograph", "الصورة"],
   chooseFinish: ["Finition du cadre", "Frame finish", "لون الإطار"],
+  finishPreview: ["Aperçu des finitions avec la photographie choisie.", "Preview the finishes with your chosen photograph.", "عاين ألوان الإطارات مع الصورة التي تختارها."],
   chooseSize: ["Format", "Size", "المقاس"],
   chooseOption: ["Choisir", "Select", "اختر"],
   addFrame: ["Ajouter ma demande au panier", "Add frame request to cart", "أضف طلب الإطار إلى السلة"],

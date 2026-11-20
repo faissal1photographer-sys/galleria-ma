@@ -7,10 +7,10 @@
   <meta name="description" content="Découvrez les bougies parfumées Villa Nova by Galleria et les cadres photo Galleria.">
   <title>Cadres photo · Galleria</title>
   <link rel="icon" href="assets/galleria-mark.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2">
   <script src="catalog.js" defer></script>
-  <script src="translations.js" defer></script>
-  <script src="shop.js" defer></script>
+  <script src="translations.js?v=2" defer></script>
+  <script src="shop.js?v=2" defer></script>
 </head>
 <body>
   <a class="skip" href="#main" data-copy="skip">Aller au contenu</a>
@@ -53,8 +53,12 @@
           <legend data-copy="choosePrint">Photographie</legend>
           <div class="print-gallery" id="print-gallery"></div>
         </fieldset>
+        <fieldset class="finish-picker">
+          <legend data-copy="chooseFinish">Finition du cadre</legend>
+          <p class="finish-note" data-copy="finishPreview">Aperçu des finitions avec la photographie choisie.</p>
+          <div class="finish-gallery" id="finish-gallery"></div>
+        </fieldset>
         <div class="frame-options">
-          <label><span data-copy="chooseFinish">Finition du cadre</span><select name="finish" required></select></label>
           <label><span data-copy="chooseSize">Format</span><select name="size" required></select></label>
         </div>
         <button class="button dark" type="submit" data-copy="addFrame">Ajouter ma demande au panier</button>
